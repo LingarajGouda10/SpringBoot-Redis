@@ -23,7 +23,7 @@ public class RedisConfig {
     @Value("${redis.port}")
     private int port;
     @Value("${redis.password}")
-    private String password;
+    private String  password;
 
     @Bean
     public RedisConnectionFactory connectionFactory() {

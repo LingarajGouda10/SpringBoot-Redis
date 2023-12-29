@@ -2,12 +2,15 @@ package com.ivoyant.Redis.Controller;
 
 import com.ivoyant.Redis.Entity.Product;
 import com.ivoyant.Redis.Service.ProductService;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Role;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -24,6 +27,7 @@ public class ProductController {
     }
 
     @GetMapping
+    @RolesAllowed("ADMIN")
     public List<Object> getAllProduct() {
         return productService.findAll();
     }
@@ -40,6 +44,11 @@ public class ProductController {
     public String delete(@PathVariable int id) {
 
         return productService.deleteProductById(id);
+    }
+
+    @GetMapping("/Current-user")
+    public String getLoggedInUser(Principal principal){
+        return principal.getName();
     }
 
 }
